@@ -15,6 +15,11 @@ public:
 	// Sets default values for this character's properties
 	AMyEnemy();
 
+protected:
+	virtual void BeginPlay() override;
 public:
 	virtual void Attack() override;
+public:
+	UFUNCTION()
+	virtual void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted) override;
 };

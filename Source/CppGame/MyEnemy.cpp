@@ -28,11 +28,19 @@ AMyEnemy::AMyEnemy()
 
 }
 
+void AMyEnemy::BeginPlay()
+{
+	Super::BeginPlay();
+}
+
 void AMyEnemy::Attack()
 {
-	if (IsValid(CreatureAnimInstance))
-	{
-		CreatureAnimInstance->PlayAttackMontage();
-	}
+	Super::Attack();
+}
+
+void AMyEnemy::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
+{
+	Super::OnAttackMontageEnded(Montage, bInterrupted);
+	UE_LOG(LogTemp, Log, TEXT("Attack End"));
 }
 

@@ -30,4 +30,7 @@ public:
 	void LookUpDown(float value);
 public:
 	virtual void Attack() override;
+public:
+	UFUNCTION()
+	virtual void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted) override;
 };

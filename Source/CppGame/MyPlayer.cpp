@@ -75,9 +75,13 @@ void AMyPlayer::LookUpDown(float value)
 
 void AMyPlayer::Attack()
 {
+	if (IsAttacking)
+	{
+		return;
+	}
+
 	if (IsValid(CreatureAnimInstance))
 	{
-		CreatureAnimInstance->PlayAttackMontage();
 		FTransform SocketTransform = GetMesh()->GetSocketTransform(FName("BowEmitterSocket"));
 		FVector ActorLocation = SocketTransform.GetLocation();
 		FRotator ActorRotation = SocketTransform.GetRotation().Rotator();
@@ -87,4 +91,11 @@ void AMyPlayer::Attack()
 		auto MyArrow = GetWorld()->SpawnActor<AArrow>(ActorLocation, ActorRotation, params);
 
 	}
+
+	Super::Attack();
+}
+
+void AMyPlayer::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
+{
+	Super::OnAttackMontageEnded(Montage, bInterrupted);
 }

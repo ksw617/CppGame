@@ -12,15 +12,23 @@ class CPPGAME_API ACreature : public ACharacter
 	GENERATED_BODY()
 protected:
 	UPROPERTY(VisibleAnywhere)
+	bool IsAttacking = false;
+	UPROPERTY(VisibleAnywhere)
+	class UMyActorComponent* MyActorComponent;
+	UPROPERTY(VisibleAnywhere)
 	class UCratureAnim* CreatureAnimInstance;
 public:
 	// Sets default values for this character's properties
-	ACreature() {};		
+	ACreature();		
 protected:
 		// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 public:
-	virtual void Attack() {};
+	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+public:
+	virtual void Attack();
+	virtual void OnHit();
+	virtual void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 
 
 };
