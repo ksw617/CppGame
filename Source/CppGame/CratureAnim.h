@@ -6,6 +6,8 @@
 #include "Animation/AnimInstance.h"
 #include "CratureAnim.generated.h"
 
+
+DECLARE_MULTICAST_DELEGATE(FOnAttackHit);
 /**
  * 
  */
@@ -34,7 +36,8 @@ public:
 	class ACharacter* Creature;
 	UPROPERTY(VisibleAnywhere)
 	class UCharacterMovementComponent* CharacterMovement;
-
+public:
+	FOnAttackHit OnAttackHit;
 public:
 	UCratureAnim() {}
 public:
@@ -42,4 +45,6 @@ public:
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 public:
 	void PlayAttackMontage();
+	UFUNCTION()
+	void AnimNotify_Hit();
 };

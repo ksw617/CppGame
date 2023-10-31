@@ -52,3 +52,8 @@ void UCratureAnim::PlayAttackMontage()
 		}
 	}
 }
+
+void UCratureAnim::AnimNotify_Hit()
+{	
+	OnAttackHit.Broadcast();
+}

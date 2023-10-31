@@ -22,4 +22,5 @@ public:
 public:
 	UFUNCTION()
 	virtual void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted) override;
+	virtual void OnHit() override;
 };
