@@ -18,9 +18,5 @@ public:
 protected:
 	virtual void BeginPlay() override;
 public:
-	virtual void Attack() override;
-public:
-	UFUNCTION()
-	virtual void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted) override;
 	virtual void OnHit() override;
 };

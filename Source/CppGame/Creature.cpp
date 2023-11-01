@@ -6,6 +6,7 @@
 #include "MyActorComponent.h"
 #include "Components/WidgetComponent.h"
 #include "MyUserWidget.h"
+#include "Components/CapsuleComponent.h"
 
 
 ACreature::ACreature()
@@ -23,6 +24,8 @@ ACreature::ACreature()
 		HpBar->SetDrawSize(FVector2D(200.f, 30.f));
 		HpBar->SetRelativeLocation(FVector(0.f, 0.f, 200.f));
 	}
+
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Character"));
 }
 
 void ACreature::BeginPlay()
@@ -37,11 +40,16 @@ void ACreature::BeginPlay()
 		CreatureAnimInstance->OnAttackHit.AddUObject(this, &ACreature::OnHit);
 	}
 
+	auto HpWidget = Cast<UMyUserWidget>(HpBar->GetUserWidgetObject());
+	if (HpWidget)
+	{
+		HpWidget->BindHp(MyActorComponent);
+	}
+
 }
 
 float ACreature::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
-	UE_LOG(LogTemp, Log, TEXT("Take Damage : %f"), Damage);
 	MyActorComponent->OnDamaged(Damage);
 	return Damage;
 }

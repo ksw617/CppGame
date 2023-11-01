@@ -42,9 +42,6 @@ void UMyActorComponent::SetLevel(int32 _Level)
 			Level = CharacterData->Level;
 			MaxHp = CharacterData->MaxHp;
 			Hp = MaxHp;
-
-			UE_LOG(LogTemp, Warning, TEXT("HP : %d"), Hp);
-			UE_LOG(LogTemp, Warning, TEXT("Level : %d"), Level);
 		}
 	}
 }
@@ -52,13 +49,29 @@ void UMyActorComponent::SetLevel(int32 _Level)
 void UMyActorComponent::OnDamaged(float DamageAmount)
 {
 
-	Hp -= DamageAmount;
+	int32 NewHP = Hp - DamageAmount;
+	SetHp(NewHP);
+}
+
+void UMyActorComponent::SetHp(int32 _Hp)
+{
+	Hp = _Hp;
 	if (Hp < 0)
 	{
 		Hp = 0;
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("HP : %d"), Hp);
+	OnHpChanged.Broadcast();
+}
+
+float UMyActorComponent::GetHpRatio()
+{
+	if (MaxHp == 0 || Hp == 0)
+	{
+		return 0.f;
+	}
+
+	return (float)Hp / (float)MaxHp;
 }
 
 

@@ -15,7 +15,7 @@ AMyPlayer::AMyPlayer()
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 
-	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Character"));
+	
 
 	SpringArm->SetupAttachment(GetCapsuleComponent());
 	Camera->SetupAttachment(SpringArm);
@@ -73,29 +73,44 @@ void AMyPlayer::LookUpDown(float value)
 	AddControllerPitchInput(value);
 }
 
-void AMyPlayer::Attack()
+
+void AMyPlayer::OnHit()
 {
-	if (IsAttacking)
+	float AttackRange = 10000.f;
+
+	FHitResult HitResult;
+
+	FVector Center = GetActorLocation();
+	FVector Forward = Center + GetActorForwardVector() * AttackRange;
+	FCollisionQueryParams params;
+	params.AddIgnoredActor(this);
+
+	bool Result = GetWorld()->LineTraceSingleByChannel
+	(
+		OUT HitResult,
+		Center,
+		Forward,
+		ECollisionChannel::ECC_GameTraceChannel3,
+		params
+	);
+
+	if (Result)
 	{
-		return;
+		DrawDebugLine(GetWorld(), Center, Forward, FColor::Green, true);
+	}
+	else
+	{
+		DrawDebugLine(GetWorld(), Center, Forward, FColor::Red, true);
 	}
 
-	if (IsValid(CreatureAnimInstance))
-	{
-		FTransform SocketTransform = GetMesh()->GetSocketTransform(FName("BowEmitterSocket"));
-		FVector ActorLocation = SocketTransform.GetLocation();
-		FRotator ActorRotation = SocketTransform.GetRotation().Rotator();
-		FActorSpawnParameters params;
-		params.Owner = this;
+	FTransform SocketTransform = GetMesh()->GetSocketTransform(FName("BowEmitterSocket"));
+	FVector ActorLocation = SocketTransform.GetLocation();
+	FRotator ActorRotation = SocketTransform.GetRotation().Rotator();
+	FActorSpawnParameters ArrowParams;
+	ArrowParams.Owner = this;
 
-		auto MyArrow = GetWorld()->SpawnActor<AArrow>(ActorLocation, ActorRotation, params);
+	auto MyArrow = GetWorld()->SpawnActor<AArrow>(ActorLocation, ActorRotation, ArrowParams);
 
-	}
 
-	Super::Attack();
-}
 
-void AMyPlayer::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
-{
-	Super::OnAttackMontageEnded(Montage, bInterrupted);
 }

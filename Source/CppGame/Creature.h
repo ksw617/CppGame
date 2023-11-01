@@ -31,6 +31,7 @@ public:
 public:
 	virtual void Attack();
 	virtual void OnHit();
+	UFUNCTION()
 	virtual void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 
 

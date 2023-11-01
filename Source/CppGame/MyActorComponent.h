@@ -7,6 +7,9 @@
 #include "MyActorComponent.generated.h"
 
 
+DECLARE_MULTICAST_DELEGATE(FOnHpChanged);
+
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class CPPGAME_API UMyActorComponent : public UActorComponent
 {
@@ -18,6 +21,8 @@ private:
 	int32 MaxHp;
 	UPROPERTY(EditAnywhere, Category = Info, Meta = (AllowPrivateAccess = true))
 	int32 Hp;
+public:
+	FOnHpChanged OnHpChanged;
 
 public:	
 	// Sets default values for this component's properties
@@ -30,6 +35,8 @@ protected:
 public:
 	void SetLevel(int32 _Level);
 	void OnDamaged(float DamageAmount);
+	void SetHp(int32 _Hp);
+	float GetHpRatio();
 public:
 	int32 GetLevel() { return Level; }
 	int32 GetHp() { return Hp; }

@@ -34,16 +34,6 @@ void AMyEnemy::BeginPlay()
 	Super::BeginPlay();
 }
 
-void AMyEnemy::Attack()
-{
-	Super::Attack();
-}
-
-void AMyEnemy::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
-{
-	Super::OnAttackMontageEnded(Montage, bInterrupted);
-}
-
 void AMyEnemy::OnHit()
 {
 	FHitResult HitResult;
