@@ -7,6 +7,8 @@
 #include "Camera/CameraComponent.h"
 #include "MyAnimInstance.h"
 #include "Arrow.h"
+#include "Kismet/GameplayStatics.h"
+#include "Camera/PlayerCameraManager.h"
 
 AMyPlayer::AMyPlayer()
 {	 // Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -80,36 +82,42 @@ void AMyPlayer::OnHit()
 
 	FHitResult HitResult;
 
-	FVector Center = GetActorLocation();
-	FVector Forward = Center + GetActorForwardVector() * AttackRange;
+	APlayerCameraManager* CamManager = UGameplayStatics::GetPlayerCameraManager(this, 0);
+	FVector AimLocation = CamManager->GetCameraLocation();
+	FVector TargetLocation = CamManager->GetActorForwardVector() * AttackRange + AimLocation;
 	FCollisionQueryParams params;
 	params.AddIgnoredActor(this);
 
 	bool Result = GetWorld()->LineTraceSingleByChannel
 	(
 		OUT HitResult,
-		Center,
-		Forward,
+		AimLocation,
+		TargetLocation,
 		ECollisionChannel::ECC_GameTraceChannel3,
 		params
 	);
 
 	if (Result)
 	{
-		DrawDebugLine(GetWorld(), Center, Forward, FColor::Green, true);
+		TargetLocation = HitResult.ImpactPoint;
+		DrawDebugLine(GetWorld(), AimLocation, TargetLocation, FColor::Green, true);
 	}
 	else
 	{
-		DrawDebugLine(GetWorld(), Center, Forward, FColor::Red, true);
+		DrawDebugLine(GetWorld(), AimLocation, TargetLocation, FColor::Red, true);
 	}
-
+	
 	FTransform SocketTransform = GetMesh()->GetSocketTransform(FName("BowEmitterSocket"));
-	FVector ActorLocation = SocketTransform.GetLocation();
-	FRotator ActorRotation = SocketTransform.GetRotation().Rotator();
+	FVector ShootPoint = SocketTransform.GetLocation();
+
+	FVector DeltaVector = TargetLocation - ShootPoint;
+	FRotator ShootRotation = FRotationMatrix::MakeFromX(DeltaVector).Rotator();
 	FActorSpawnParameters ArrowParams;
 	ArrowParams.Owner = this;
+	ArrowParams.Instigator = this;
 
-	auto MyArrow = GetWorld()->SpawnActor<AArrow>(ActorLocation, ActorRotation, ArrowParams);
+	//
+	auto MyArrow = GetWorld()->SpawnActor<AArrow>(ShootPoint, ShootRotation, ArrowParams);
 
 
 
