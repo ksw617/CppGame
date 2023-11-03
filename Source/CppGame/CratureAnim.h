@@ -29,11 +29,13 @@ protected:
 	bool ShouldMove;
 	UPROPERTY(Category = Animation, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	bool IsFalling;
+	UPROPERTY(Category = Animation, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	bool OnDeath;
 public:
 	UPROPERTY(Category = Animation, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	UAnimMontage* AttackMontage;
 	UPROPERTY(VisibleAnywhere)
-	class ACharacter* Creature;
+	class ACreature* Creature;
 	UPROPERTY(VisibleAnywhere)
 	class UCharacterMovementComponent* CharacterMovement;
 public:

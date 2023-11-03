@@ -77,3 +77,8 @@ void ACreature::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
 	IsAttacking = false;
 }
+
+int ACreature::GetHP()
+{
+	return MyActorComponent->GetHp();
+}

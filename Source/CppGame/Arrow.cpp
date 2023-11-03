@@ -75,6 +75,12 @@ void AArrow::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherAc
 		ProjectileMovementComponent->StopMovementImmediately();
 		ProjectileMovementComponent->ProjectileGravityScale = 0.f;
 		this->AttachToActor(OtherActor, FAttachmentTransformRules(EAttachmentRule::KeepWorld, true));
+
+		
+		UGameplayStatics::ApplyDamage(OtherActor, 10.f, ProjectileMovementComponent->GetOwner()->GetInstigatorController(), nullptr, NULL);
+
+		FTimerHandle TimerHandle;
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [&]() { Destroy(); }, 3, false);
 	}
 
 }
