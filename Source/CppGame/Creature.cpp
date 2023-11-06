@@ -46,6 +46,8 @@ void ACreature::BeginPlay()
 		HpWidget->BindHp(MyActorComponent);
 	}
 
+	MyActorComponent->OnHpChanged.AddUObject(this, &ACreature::CheckDeath);
+
 }
 
 float ACreature::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
@@ -71,6 +73,14 @@ void ACreature::Attack()
 void ACreature::OnHit()
 {
 	//UE_LOG(LogTemp, Warning, TEXT("On Hit"));
+}
+
+void ACreature::CheckDeath()
+{
+	if (MyActorComponent->GetHp() <= 0)
+	{
+		OnDeath = true;
+	};
 }
 
 void ACreature::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)

@@ -36,18 +36,11 @@ void UCratureAnim::NativeUpdateAnimation(float DeltaSeconds)
 		Horizontal = UnrotateVector.Y;
 		Speed = Velocity.Size2D();
 
-		//auto Acceleration = CharacterMovement->GetCurrentAcceleration();
-		//ShouldMove = Speed > 3.f && Acceleration != FVector::Zero();
 		ShouldMove = Speed > 3.f;
 		IsFalling = CharacterMovement->IsFalling();
-		if (Creature->GetHP() <= 0 && !OnDeath)
-		{
-			OnDeath = true;
-			//Todo
-		}
+		OnDeath = Creature->GetDeath();
+		
 	}
-
-
 }
 
 void UCratureAnim::PlayAttackMontage()
@@ -64,4 +57,9 @@ void UCratureAnim::PlayAttackMontage()
 void UCratureAnim::AnimNotify_Hit()
 {	
 	OnAttackHit.Broadcast();
+}
+
+void UCratureAnim::AnimNotify_Death()
+{
+	Creature->Destroy();
 }

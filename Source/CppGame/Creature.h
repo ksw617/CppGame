@@ -14,11 +14,15 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	bool IsAttacking = false;
 	UPROPERTY(VisibleAnywhere)
+	bool OnDeath = false;
+	UPROPERTY(VisibleAnywhere)
 	class UMyActorComponent* MyActorComponent;
 	UPROPERTY(VisibleAnywhere)
 	class UCratureAnim* CreatureAnimInstance;
 	UPROPERTY(VisibleAnywhere)
 	class UWidgetComponent* HpBar;
+public:
+	bool GetDeath() { return OnDeath; }
 
 public:
 	// Sets default values for this character's properties
@@ -31,6 +35,7 @@ public:
 public:
 	virtual void Attack();
 	virtual void OnHit();
+	void CheckDeath();
 	UFUNCTION()
 	virtual void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 public:

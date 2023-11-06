@@ -49,4 +49,6 @@ public:
 	void PlayAttackMontage();
 	UFUNCTION()
 	void AnimNotify_Hit();
+	UFUNCTION()
+	void AnimNotify_Death();
 };
