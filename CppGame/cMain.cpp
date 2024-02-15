@@ -1,6 +1,13 @@
 #include <stdio.h>
 #include <Windows.h>
 
+#pragma region Define
+
+#define PoopCount 10
+
+#pragma endregion
+
+
 #pragma region Enum
 enum COLOR
 {
@@ -58,6 +65,7 @@ void MenuRelease();
 
 
 PObj player;
+PObj poops[PoopCount];
 
 void StageInitialize();
 void StageProgress();
@@ -169,6 +177,15 @@ void StageInitialize()
 	player->y = 25;
 	player->color = YELLOW;
 	player->shape = "옷";
+
+	for (int i = 0; i < PoopCount; i++)
+	{
+		poops[i] = (PObj)malloc(sizeof(Obj));
+		poops[i]->x = rand() % 40;  //임의의 난수에 % 10 == 0~9
+		poops[i]->y = 0;
+		poops[i]->color = BROWN;
+		poops[i]->shape = "＠";
+	}
 }
 
 void StageProgress()
@@ -189,6 +206,13 @@ void StageRender()
 	MovePos(player->x, player->y);
 	Paint(player->color);
 	printf(player->shape);
+
+	for (int i = 0; i < PoopCount; i++)
+	{
+		MovePos(poops[i]->x, poops[i]->y);
+		Paint(poops[i]->color);
+		printf(poops[i]->shape);
+	}
 }
 
 void StageRelease()
