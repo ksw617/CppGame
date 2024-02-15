@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <Windows.h>
 
-enum Color
+#pragma region Enum
+enum COLOR
 {
 	BLACK,
 	BLUE,
@@ -22,33 +23,148 @@ enum Color
 
 };
 
+enum SCENE_ID
+{
+	 LOGO, 
+	 MENU,
+	 STAGE,
+};
+#pragma endregion
 
-//커서이동 시켜주는 애
+#pragma region Game
+SCENE_ID id;
+void PlayGame();
+
+void LogoInitialize();
+void LogoProgress();
+void LogoRender();
+void LogoRelease();
+
+void MenuInitialize();
+void MenuProgress();
+void MenuRender();
+void MenuRelease();
+
+void StageInitialize();
+void StageProgress();
+void StageRender();
+void StageRelease();
+#pragma endregion
+
+#pragma region WIN_API
 void MovePos(int x, int y);
-//글자 색깔 바꿔줌
 void Paint(int color);
-//커서 숨기기
 void HideCursor();
 
+#pragma endregion
 
 int main()
 {
 	HideCursor();
+	id = LOGO;
+	LogoInitialize();
 
 
 	while (true)
 	{
 		system("cls");
-
-		MovePos(10, 10);
-		Paint(LIGHTGREEN);
-		printf("Hello world");
-
-		Sleep(1000);
+		PlayGame();
+		Sleep(50);
 
 	}
 	return 0;
 }
+
+#pragma region Game
+void PlayGame()
+{
+	switch (id)
+	{
+	case LOGO:
+		LogoProgress();
+		LogoRender();
+		break;
+	case MENU:
+		MenuProgress();
+		MenuRender();
+		break;
+	case STAGE:
+		StageProgress();
+		StageRender();
+		break;
+	default:
+		break;
+	}
+}
+
+#pragma region Logo
+void LogoInitialize()
+{
+}
+
+void LogoProgress()
+{
+	if (GetAsyncKeyState(VK_RETURN))
+	{
+		LogoRelease();
+		id = MENU;
+	}
+}
+
+void LogoRender()
+{
+	printf("LOGO");
+}
+void LogoRelease()
+{
+}
+#pragma endregion
+
+#pragma region Menu
+void MenuInitialize()
+{
+}
+
+void MenuProgress()
+{
+	if (GetAsyncKeyState(VK_SPACE))
+	{
+		MenuRelease();
+		id = STAGE;
+	}
+}
+
+void MenuRender()
+{
+	printf("MENU");
+}
+
+void MenuRelease()
+{
+}
+#pragma endregion
+
+#pragma region Stage
+void StageInitialize()
+{
+}
+
+void StageProgress()
+{
+}
+
+void StageRender()
+{
+	printf("STAGE");
+}
+
+void StageRelease()
+{
+}
+#pragma endregion
+
+#pragma endregion
+
 
 
 #pragma region WIN_API
@@ -76,4 +192,6 @@ void HideCursor()
 
 }
 
+
 #pragma endregion
+
