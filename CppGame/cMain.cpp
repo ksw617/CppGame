@@ -224,6 +224,11 @@ void StageProgress()
 				poops[i]->y = 0;
 				poops[i]->act = false;
 			}
+			
+			if (poops[i]->x == player->x && poops[i]->y == player->y)
+			{
+				player->color = RED;
+			}
 		}
 
 		
