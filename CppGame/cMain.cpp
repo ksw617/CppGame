@@ -31,6 +31,17 @@ enum SCENE_ID
 };
 #pragma endregion
 
+#pragma region Struct
+typedef struct Obj
+{
+	int x;
+	int y;
+	COLOR color;
+	const char* shape;
+}*PObj;	  //Obj*
+#pragma endregion
+
+
 #pragma region Game
 SCENE_ID id;
 void PlayGame();
@@ -44,6 +55,9 @@ void MenuInitialize();
 void MenuProgress();
 void MenuRender();
 void MenuRelease();
+
+
+PObj player;
 
 void StageInitialize();
 void StageProgress();
@@ -108,6 +122,7 @@ void LogoProgress()
 	{
 		LogoRelease();
 		id = MENU;
+		MenuInitialize();
 	}
 }
 
@@ -131,6 +146,7 @@ void MenuProgress()
 	{
 		MenuRelease();
 		id = STAGE;
+		StageInitialize();
 	}
 }
 
@@ -147,15 +163,32 @@ void MenuRelease()
 #pragma region Stage
 void StageInitialize()
 {
+	//PObj == Obj*
+	player = (PObj)malloc(sizeof(Obj));
+	player->x = 10;
+	player->y = 25;
+	player->color = YELLOW;
+	player->shape = "¿Ê";
 }
 
 void StageProgress()
 {
+	if (GetAsyncKeyState(VK_LEFT))
+	{
+		player->x--;
+	}
+
+	if (GetAsyncKeyState(VK_RIGHT))
+	{
+		player->x++;
+	}
 }
 
 void StageRender()
 {
-	printf("STAGE");
+	MovePos(player->x, player->y);
+	Paint(player->color);
+	printf(player->shape);
 }
 
 void StageRelease()
