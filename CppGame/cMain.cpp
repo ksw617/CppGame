@@ -3,7 +3,7 @@
 
 #pragma region Define
 
-#define PoopCount 10
+#define PoopCount 20
 
 #pragma endregion
 
@@ -41,6 +41,7 @@ enum SCENE_ID
 #pragma region Struct
 typedef struct Obj
 {
+	bool act;
 	int x;
 	int y;
 	COLOR color;
@@ -181,7 +182,8 @@ void StageInitialize()
 	for (int i = 0; i < PoopCount; i++)
 	{
 		poops[i] = (PObj)malloc(sizeof(Obj));
-		poops[i]->x = rand() % 40;  //임의의 난수에 % 10 == 0~9
+		poops[i]->act = false;
+		poops[i]->x = 0;  //임의의 난수에 % 10 == 0~9
 		poops[i]->y = 0;
 		poops[i]->color = BROWN;
 		poops[i]->shape = "＠";
@@ -198,6 +200,33 @@ void StageProgress()
 	if (GetAsyncKeyState(VK_RIGHT))
 	{
 		player->x++;
+	}
+
+	for (int i = 0; i < PoopCount; i++)
+	{
+		if (poops[i]->act == false)
+		{
+			poops[i]->x = rand() % 40;
+			poops[i]->act = true;
+			break;
+
+		}
+	}
+
+
+	for (int i = 0; i < PoopCount; i++)
+	{
+		if (poops[i]->act == true)
+		{
+			poops[i]->y++;
+			if (poops[i]->y > player->y)
+			{
+				poops[i]->y = 0;
+				poops[i]->act = false;
+			}
+		}
+
+		
 	}
 }
 
