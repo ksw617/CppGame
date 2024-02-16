@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <Windows.h>
 
-#define BulletCount 3
+#define BulletCount 10
+#define EnemyCount 10
 
 #pragma region Enum
 enum COLOR
@@ -43,6 +44,15 @@ struct Bullet
 	const char* shape;
 };
 
+struct Enemy
+{
+	bool act;
+	int x;
+	int y;
+	COLOR color;
+	const char* shape[3];
+};
+
 struct Obj
 {
 	int x;
@@ -56,8 +66,10 @@ struct Obj
 
 
 #pragma region Game
-Obj* player = nullptr;	  // nullptr == NULL == 0
-Bullet* bullets[BulletCount] = {}; //BulletCount == 3
+Obj* player = nullptr;	  
+Bullet* bullets[BulletCount] = {}; 
+Enemy* enemies[EnemyCount] = {};
+
 
 void StageInitialize();
 void StageProgress();
@@ -150,6 +162,18 @@ void StageInitialize()
 		bullets[i]->shape = "¡Ü";
 	}
 
+	for (int i = 0; i < EnemyCount; i++)
+	{
+		enemies[i] = (Enemy*)malloc(sizeof(Enemy));
+		enemies[i]->act = true;
+		enemies[i]->x = rand() % 20 + 20;
+		enemies[i]->y = rand() % 30;
+		enemies[i]->color = (COLOR)(rand() % 14 + 1);
+		enemies[i]->shape[0] = "¡à¡à¡à¡à¡à";
+		enemies[i]->shape[1] = "¡à¡à¡à¡à¡à";
+		enemies[i]->shape[2] = "¡à¡à¡à¡à¡à";
+	}
+
 }
 
 void StageProgress()
@@ -173,6 +197,36 @@ void StageProgress()
 	{
 		player->y++;
 
+	}
+
+	if (GetAsyncKeyState(VK_SPACE))
+	{
+		for (int i = 0; i < BulletCount; i++)
+		{
+			if (bullets[i]->act == false)
+			{
+
+				bullets[i]->info.x = player->x + 6;
+				bullets[i]->info.y = player->y + 1; 
+				bullets[i]->act = true;
+				break;
+			}
+		}
+	}
+
+	for (int i = 0; i < BulletCount; i++)
+	{
+		//if (bullets[i]->act)
+		if (bullets[i]->act == true)
+		{
+			bullets[i]->info.x++;
+			if (bullets[i]->info.x >= 40)
+			{
+				bullets[i]->info.x = i;
+				bullets[i]->info.y = 0;
+				bullets[i]->act = false;
+			}
+		}
 	}
 }
 
@@ -203,6 +257,17 @@ void StageRender()
 		Paint(bullets[i]->info.color);
 		printf(bullets[i]->shape);
 	}
+
+	for (int i = 0; i < EnemyCount; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			MovePos(enemies[i]->x, enemies[i]->y + j);
+			Paint(enemies[i]->color);
+			printf(enemies[i]->shape[j]);
+		}
+
+	}
 }
 
 void StageRelease()
@@ -219,6 +284,15 @@ void StageRelease()
 		{
 			free(bullets[i]);
 			bullets[i] = nullptr;
+		}
+	}
+
+	for (int i = 0; i < EnemyCount; i++)
+	{
+		if (enemies[i] != nullptr)
+		{
+			free(enemies[i]);
+			enemies[i] = nullptr;
 		}
 	}
 }
