@@ -1,13 +1,7 @@
 #pragma once
-#include "Scene.h"
-
-#define BULLET_COUNT 10
-
-class Stage : public Scene
+#include "Obj.h"
+class Bullet : public Obj
 {
-private:
-	class Obj* player = nullptr;
-	class Obj* bullets[BULLET_COUNT] = {};
 public:
 	virtual void Initialize() override;
 	virtual void Progress() override;

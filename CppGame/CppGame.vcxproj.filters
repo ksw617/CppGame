@@ -43,6 +43,18 @@
     <Filter Include="Source Files\00_GameManager\01_DoubleBuffer">
       <UniqueIdentifier>{72724207-d60f-42b5-aeea-0066cbe6e956}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\02_Object\00_Player">
+      <UniqueIdentifier>{41e3e868-254e-406e-97cf-650d13642418}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\02_Object\01_Enemy">
+      <UniqueIdentifier>{6acda1c0-a305-4b0a-b382-b5cdae1eae6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\02_Object\02_Bullet">
+      <UniqueIdentifier>{96d6b702-59af-4c60-9c65-f6a6b7e66fbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\02_Object\03_Npc">
+      <UniqueIdentifier>{3bbe9bbd-3521-4a7a-86ff-6e3f8eccd40f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cMain.cpp">
@@ -69,6 +81,15 @@
     <ClCompile Include="DoubleBuffer.cpp">
       <Filter>Source Files\00_GameManager\01_DoubleBuffer</Filter>
     </ClCompile>
+    <ClCompile Include="Obj.cpp">
+      <Filter>Source Files\02_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\02_Object\00_Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Source Files\02_Object\02_Bullet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header.h">
@@ -94,6 +115,15 @@
     </ClInclude>
     <ClInclude Include="DoubleBuffer.h">
       <Filter>Source Files\00_GameManager\01_DoubleBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Obj.h">
+      <Filter>Source Files\02_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Source Files\02_Object\00_Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Source Files\02_Object\02_Bullet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

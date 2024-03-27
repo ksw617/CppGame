@@ -26,7 +26,7 @@ void SceneManager::LoadScene(SCENE_ID id)
 		break;
 	}
 
-	if (currentScene == nullptr)
+	if (currentScene != nullptr)
 	{
 		currentScene->Initialize();
 	}

@@ -8,7 +8,6 @@ int main()
 
 	while (true)
 	{
-		system("cls");
 
 		SceneManager::Get().Progress();
 		SceneManager::Get().Render();
@@ -17,7 +16,7 @@ int main()
 		DoubleBuffer::Get().ClearBuffer();
 
 
-		Sleep(50);
+		Sleep(30);
 	}
 
 	SceneManager::Get().Release();
