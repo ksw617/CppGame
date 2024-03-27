@@ -40,6 +40,9 @@
     <Filter Include="Source Files\99_Utils\00_Singleton">
       <UniqueIdentifier>{b13efc75-d6de-4423-8017-5d543917a4df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\00_GameManager\01_DoubleBuffer">
+      <UniqueIdentifier>{72724207-d60f-42b5-aeea-0066cbe6e956}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cMain.cpp">
@@ -63,6 +66,9 @@
     <ClCompile Include="Singleton.cpp">
       <Filter>Source Files\99_Utils\00_Singleton</Filter>
     </ClCompile>
+    <ClCompile Include="DoubleBuffer.cpp">
+      <Filter>Source Files\00_GameManager\01_DoubleBuffer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header.h">
@@ -85,6 +91,9 @@
     </ClInclude>
     <ClInclude Include="Singleton.h">
       <Filter>Source Files\99_Utils\00_Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="DoubleBuffer.h">
+      <Filter>Source Files\00_GameManager\01_DoubleBuffer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
